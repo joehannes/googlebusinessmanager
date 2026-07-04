@@ -25,6 +25,11 @@ class SettingsScreen extends StatelessWidget {
             title: Text('Privacy'),
             subtitle: Text('Your keys and data stay local by default.'),
           ),
+          ListTile(
+            leading: Icon(Icons.dashboard_customize),
+            title: Text('Responsive shell'),
+            subtitle: Text('Switches between bottom navigation and navigation rail automatically.'),
+          ),
         ],
       ),
     );

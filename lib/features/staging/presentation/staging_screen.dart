@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_business_profile_manager/features/businesses/data/active_business_provider.dart';
 import 'package:google_business_profile_manager/features/businesses/data/app_database.dart';
 import 'package:google_business_profile_manager/features/businesses/data/business_repository.dart';
 
@@ -14,6 +15,7 @@ class StagingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(stagingProductsProvider);
+    final activeBusinessId = ref.watch(activeBusinessIdProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Bulk Staging Catalog')),
@@ -24,6 +26,10 @@ class StagingScreen extends ConsumerWidget {
           separatorBuilder: (context, index) => const SizedBox(height: 12),
           itemBuilder: (context, index) {
             final product = items[index];
+            final isVisible = activeBusinessId == null || product.businessId == activeBusinessId;
+            if (!isVisible) {
+              return const SizedBox.shrink();
+            }
             return Card(
               child: ListTile(
                 title: Text(product.title),

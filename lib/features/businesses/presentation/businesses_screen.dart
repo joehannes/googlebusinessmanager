@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_business_profile_manager/features/businesses/data/active_business_provider.dart';
+import 'package:google_business_profile_manager/features/businesses/data/app_database.dart';
 import 'package:google_business_profile_manager/features/businesses/data/business_repository.dart';
 
 final businessesProvider = StreamProvider<List<BusinessProfile>>((ref) {
@@ -13,6 +15,7 @@ class BusinessesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final businesses = ref.watch(businessesProvider);
+    final activeBusinessId = ref.watch(activeBusinessIdProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Business Profiles')),
@@ -23,12 +26,13 @@ class BusinessesScreen extends ConsumerWidget {
           separatorBuilder: (context, index) => const SizedBox(height: 12),
           itemBuilder: (context, index) {
             final business = items[index];
+            final isActive = business.id == activeBusinessId;
             return Card(
               child: ListTile(
                 title: Text(business.name),
                 subtitle: Text('${business.category} • ${business.location}'),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
+                trailing: isActive ? const Icon(Icons.check_circle, color: Colors.teal) : const Icon(Icons.chevron_right),
+                onTap: () => ref.read(activeBusinessIdProvider.notifier).state = business.id,
               ),
             );
           },

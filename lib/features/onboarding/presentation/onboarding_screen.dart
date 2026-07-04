@@ -37,6 +37,14 @@ class OnboardingScreen extends StatelessWidget {
                   subtitle: const Text('Your data stays on-device until you explicitly sync.'),
                 ),
               ),
+              const SizedBox(height: 12),
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.inventory_2),
+                  title: const Text('Bulk staging catalog'),
+                  subtitle: const Text('Prepare offers and products before publishing them to GBP.'),
+                ),
+              ),
               const Spacer(),
               FilledButton.icon(
                 onPressed: () => context.go('/businesses'),
