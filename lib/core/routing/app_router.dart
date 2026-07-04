@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_business_profile_manager/features/ai_assistant/presentation/ai_assistant_screen.dart';
+import 'package:google_business_profile_manager/features/businesses/data/app_database.dart';
+import 'package:google_business_profile_manager/features/businesses/presentation/business_detail_screen.dart';
 import 'package:google_business_profile_manager/features/businesses/presentation/businesses_screen.dart';
 import 'package:google_business_profile_manager/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:google_business_profile_manager/features/settings/presentation/settings_screen.dart';
@@ -14,6 +16,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/onboarding',
         builder: (context, state) => const OnboardingScreen(),
+      ),
+      GoRoute(
+        path: '/businesses/detail',
+        builder: (context, state) {
+          final business = state.extra as BusinessProfile?;
+          return BusinessDetailScreen(business: business!);
+        },
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) => ResponsiveShell(navigationShell: navigationShell),

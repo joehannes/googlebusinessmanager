@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_business_profile_manager/features/businesses/data/active_business_provider.dart';
 import 'package:google_business_profile_manager/features/businesses/data/app_database.dart';
 import 'package:google_business_profile_manager/features/businesses/data/business_repository.dart';
+import 'package:google_business_profile_manager/features/businesses/presentation/business_detail_screen.dart';
 
 final businessesProvider = StreamProvider<List<BusinessProfile>>((ref) {
   final repository = ref.watch(businessRepositoryProvider);
@@ -32,7 +34,10 @@ class BusinessesScreen extends ConsumerWidget {
                 title: Text(business.name),
                 subtitle: Text('${business.category} • ${business.location}'),
                 trailing: isActive ? const Icon(Icons.check_circle, color: Colors.teal) : const Icon(Icons.chevron_right),
-                onTap: () => ref.read(activeBusinessIdProvider.notifier).state = business.id,
+                onTap: () {
+                  ref.read(activeBusinessIdProvider.notifier).state = business.id;
+                  context.push('/businesses/detail', extra: business);
+                },
               ),
             );
           },
