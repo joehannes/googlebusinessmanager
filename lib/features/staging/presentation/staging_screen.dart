@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_business_profile_manager/features/businesses/data/active_business_provider.dart';
 import 'package:google_business_profile_manager/features/businesses/data/app_database.dart';
 import 'package:google_business_profile_manager/features/businesses/data/business_repository.dart';
+import 'package:google_business_profile_manager/features/staging/presentation/staging_editor_screen.dart';
 
 final stagingProductsProvider = FutureProvider<List<StagingProductData>>((ref) {
   final repository = ref.watch(businessRepositoryProvider);
@@ -34,6 +36,7 @@ class StagingScreen extends ConsumerWidget {
               child: ListTile(
                 title: Text(product.title),
                 subtitle: Text(product.description),
+                onTap: () => context.push('/staging/editor', extra: product),
                 trailing: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,

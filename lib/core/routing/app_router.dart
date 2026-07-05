@@ -7,6 +7,7 @@ import 'package:google_business_profile_manager/features/businesses/presentation
 import 'package:google_business_profile_manager/features/businesses/presentation/businesses_screen.dart';
 import 'package:google_business_profile_manager/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:google_business_profile_manager/features/settings/presentation/settings_screen.dart';
+import 'package:google_business_profile_manager/features/staging/presentation/staging_editor_screen.dart';
 import 'package:google_business_profile_manager/features/staging/presentation/staging_screen.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -22,6 +23,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) {
           final business = state.extra as BusinessProfile?;
           return BusinessDetailScreen(business: business!);
+        },
+      ),
+      GoRoute(
+        path: '/staging/editor',
+        builder: (context, state) {
+          final product = state.extra as StagingProductData?;
+          return StagingEditorScreen(product: product!);
         },
       ),
       StatefulShellRoute.indexedStack(
